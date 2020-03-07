@@ -4,8 +4,8 @@ PKG              := meson
 $(PKG)_WEBSITE   := https://mesonbuild.com/
 $(PKG)_DESCR     := An open source build system meant to be extremely fast and as user friendly as possible.
 $(PKG)_IGNORE    :=
-$(PKG)_VERSION   := 0.52.1
-$(PKG)_CHECKSUM  := ad8dbad61d4c22cb7d768cb1f8a212b4abf0f3fbc17c298d816140ecd9f5d1df
+$(PKG)_VERSION   := 0.53.2
+$(PKG)_CHECKSUM  := eab4f5d5dde12d002b7ddd958a9a0658589b63622b6cea2715e0235b95917888
 $(PKG)_GH_CONF   := mesonbuild/meson/releases/latest
 $(PKG)_SUBDIR    := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE      := $($(PKG)_SUBDIR).tar.gz
@@ -13,11 +13,6 @@ $(PKG)_URL       := https://github.com/mesonbuild/meson/archive/$($(PKG)_VERSION
 $(PKG)_FILE_DEPS := $(wildcard $(PWD)/src/meson/conf/*)
 $(PKG)_DEPS      := cmake-conf ninja python3-conf
 $(PKG)_TARGETS  := $(BUILD)
-
-define $(PKG)_UPDATE
-    echo 'Updates for package $(PKG) is disabled.' >&2;
-    echo $($(PKG)_VERSION)
-endef
 
 define $(PKG)_BUILD_$(BUILD)
     cd '$(SOURCE_DIR)' && python3 setup.py install --prefix='$(PREFIX)/$(TARGET)'
