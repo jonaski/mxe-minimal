@@ -4,8 +4,8 @@ PKG             := glib
 $(PKG)_WEBSITE  := https://gtk.org/
 $(PKG)_DESCR    := GLib
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 2.64.1
-$(PKG)_CHECKSUM := 17967603bcb44b6dbaac47988d80c29a3d28519210b28157c2bd10997595bbc7
+$(PKG)_VERSION  := 2.64.3
+$(PKG)_CHECKSUM := fe9cbc97925d14c804935f067a3ad77ef55c0bbe9befe68962318f5a767ceb22
 $(PKG)_SUBDIR   := glib-$($(PKG)_VERSION)
 $(PKG)_FILE     := glib-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := https://download.gnome.org/sources/glib/$(call SHORT_PKG_VERSION,$(PKG))/$($(PKG)_FILE)
@@ -22,7 +22,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD_$(BUILD)
-    cd '$(SOURCE_DIR)' && meson --prefix='$(PREFIX)/$(TARGET)' \
+    cd '$(SOURCE_DIR)' && $(PREFIX)/$(BUILD)/bin/meson --prefix='$(PREFIX)/$(TARGET)' \
                                 --buildtype=release \
                                 --pkg-config-path='$(PREFIX)/$(TARGET)/bin/pkgconf' \
                                 '$(BUILD_DIR)'
