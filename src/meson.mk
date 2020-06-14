@@ -4,14 +4,14 @@ PKG              := meson
 $(PKG)_WEBSITE   := https://mesonbuild.com/
 $(PKG)_DESCR     := An open source build system meant to be extremely fast and as user friendly as possible.
 $(PKG)_IGNORE    :=
-$(PKG)_VERSION   := 0.53.2
-$(PKG)_CHECKSUM  := eab4f5d5dde12d002b7ddd958a9a0658589b63622b6cea2715e0235b95917888
-$(PKG)_GH_CONF   := mesonbuild/meson/releases/latest
+$(PKG)_VERSION   := 0.54.2
+$(PKG)_CHECKSUM  := 85cafdc70ae7d1d9d506e7356b917c649c4df2077bd6a0382db37648aa4ecbdb
+$(PKG)_GH_CONF   := mesonbuild/meson/releases
 $(PKG)_SUBDIR    := $(PKG)-$($(PKG)_VERSION)
 $(PKG)_FILE      := $($(PKG)_SUBDIR).tar.gz
 $(PKG)_URL       := https://github.com/mesonbuild/meson/archive/$($(PKG)_VERSION).tar.gz
 $(PKG)_FILE_DEPS := $(wildcard $(PWD)/src/meson/conf/*)
-$(PKG)_DEPS      := cmake-conf ninja python3-conf
+$(PKG)_DEPS      := cmake-conf python3-conf
 $(PKG)_TARGETS  := $(BUILD)
 
 define $(PKG)_BUILD_$(BUILD)
