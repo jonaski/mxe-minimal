@@ -6,14 +6,19 @@ $(PKG)_DESCR    := ICU4C
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION  := 66.1
 $(PKG)_MAJOR    := $(word 1,$(subst ., ,$($(PKG)_VERSION)))
-$(PKG)_CHECKSUM := b3ebfcd51e278c2484479d7552aff97e9174370c4e80de33b13119acebe59994
+$(PKG)_CHECKSUM := 52a3f2209ab95559c1cf0a14f24338001f389615bf00e2585ef3dbc43ecf0a2e
 $(PKG)_GH_CONF  := unicode-org/icu/releases/latest,release-,,,-
-$(PKG)_SUBDIR   := icu-release-$(subst .,-,$($(PKG)_VERSION))
+$(PKG)_SUBDIR   := icu
 $(PKG)_URL      := $($(PKG)_WEBSITE)/releases/download/release-$(subst .,-,$($(PKG)_VERSION))/icu4c-$(subst .,_,$($(PKG)_VERSION))-src.tgz
 $(PKG)_DEPS     := cc $(BUILD)~$(PKG) pe-util
 
 $(PKG)_TARGETS       := $(BUILD) $(MXE_TARGETS)
 $(PKG)_DEPS_$(BUILD) :=
+
+define $(PKG)_UPDATE
+    echo 'Updates for package $(PKG) is disabled.' >&2;
+    echo $($(PKG)_VERSION)
+endef
 
 define $(PKG)_BUILD_$(BUILD)
 
@@ -25,7 +30,7 @@ define $(PKG)_BUILD_$(BUILD)
     # cross build requires artefacts from native build tree
     rm -rf '$(PREFIX)/$(BUILD)/$(PKG)'
     $(INSTALL) -d '$(PREFIX)/$(BUILD)/$(PKG)'
-    cd '$(PREFIX)/$(BUILD)/$(PKG)' && '$(SOURCE_DIR)/$(PKG)/source/configure' \
+    cd '$(PREFIX)/$(BUILD)/$(PKG)' && '$(SOURCE_DIR)/source/configure' \
         CC=$(BUILD_CC) \
         CXX=$(BUILD_CXX) \
         --enable-tests=no \
@@ -47,7 +52,7 @@ define $(PKG)_BUILD_COMMON
     fi
 
     rm -fv $(shell echo "$(PREFIX)/$(TARGET)"/{bin,lib}/{lib,libs,}icu'*'.{a,dll,dll.a})
-    cd '$(BUILD_DIR)' && '$(SOURCE_DIR)/$(PKG)/source/configure' \
+    cd '$(BUILD_DIR)' && '$(SOURCE_DIR)/source/configure' \
         $(MXE_CONFIGURE_OPTS) \
         --with-cross-build='$(PREFIX)/$(BUILD)/$(PKG)' \
         --enable-icu-config=no \
@@ -76,7 +81,7 @@ endef
 define $(PKG)_BUILD_SHARED
     $($(PKG)_BUILD_COMMON)
     # icu4c installs its DLLs to lib/. Move them to bin/.
-    mv -fv $(PREFIX)/$(TARGET)/lib/icu*.dll '$(PREFIX)/$(TARGET)/bin/'
+    #mv -fv $(PREFIX)/$(TARGET)/lib/icu*.dll '$(PREFIX)/$(TARGET)/bin/'
 
     # stub data is icudt.dll, actual data is libicudt.dll - prefer actual
     test ! -e '$(PREFIX)/$(TARGET)/lib/libicudt$($(PKG)_MAJOR).dll' \
@@ -86,10 +91,10 @@ define $(PKG)_BUILD_SHARED
 
     # bundle test to verify deployment
     rm -rfv '$(PREFIX)/$(TARGET)/bin/test-$(PKG)' '$(PREFIX)/$(TARGET)/bin/test-$(PKG).zip'
-    $(INSTALL) -d '$(PREFIX)/$(TARGET)/bin/test-$(PKG)'
-    cp $$($(TARGET)-peldd --all '$(PREFIX)/$(TARGET)/bin/test-$(PKG).exe') '$(PREFIX)/$(TARGET)/bin/test-$(PKG)'
-    cd '$(PREFIX)/$(TARGET)/bin' && zip -r test-$(PKG).zip test-$(PKG)
-    rm -rfv '$(PREFIX)/$(TARGET)/bin/test-$(PKG)'
+    #$(INSTALL) -d '$(PREFIX)/$(TARGET)/bin/test-$(PKG)'
+    #cp $$($(TARGET)-peldd --all '$(PREFIX)/$(TARGET)/bin/test-$(PKG).exe') '$(PREFIX)/$(TARGET)/bin/test-$(PKG)'
+    #cd '$(PREFIX)/$(TARGET)/bin' && zip -r test-$(PKG).zip test-$(PKG)
+    #rm -rfv '$(PREFIX)/$(TARGET)/bin/test-$(PKG)'
 endef
 
 define $(PKG)_BUILD
