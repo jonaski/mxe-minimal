@@ -4,9 +4,9 @@ PKG             := pe-parse
 $(PKG)_WEBSITE  := https://github.com/trailofbits/pe-parse
 $(PKG)_DESCR    := Principled, lightweight C/C++ PE parser
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := c5e9a09
-$(PKG)_CHECKSUM := c09f8463da3c382b912c702f2e1bec85672b7c78ddb7e21182136a53df0f34fd
-$(PKG)_GH_CONF  := trailofbits/pe-parse/branches/master
+$(PKG)_VERSION  := 1.2.0
+$(PKG)_CHECKSUM := c2fe84a8944b36f2952b575d6517cbcf9590d6c5759702d78b64dbbf3482c515
+$(PKG)_GH_CONF  := trailofbits/pe-parse/releases, v
 $(PKG)_TARGETS  := $(BUILD) $(MXE_TARGETS)
 $(PKG)_DEPS     := cc
 
@@ -25,5 +25,5 @@ define $(PKG)_BUILD
     mkdir '$(BUILD_DIR).cmake'
     cd '$(BUILD_DIR).cmake' && $(TARGET)-cmake '$(SOURCE_DIR)/examples/peaddrconv'
     $(MAKE) -C '$(BUILD_DIR).cmake' -j '$(JOBS)'
-    $(INSTALL) -m755 '$(BUILD_DIR).cmake/peaddrconv.exe' '$(PREFIX)/$(TARGET)/bin/test-$(PKG).exe'
+    #$(INSTALL) -m755 '$(BUILD_DIR).cmake/peaddrconv.exe' '$(PREFIX)/$(TARGET)/bin/test-$(PKG).exe'
 endef
